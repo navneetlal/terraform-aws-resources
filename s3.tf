@@ -6,3 +6,14 @@ resource "aws_s3_bucket" "main" {
 
   region = "${var.s3_region}"
 }
+
+terraform {
+    required_version = ">= 0.11"
+
+    backend "s3" {
+        bucket = "terraform-navneet-test-ap-south-1"
+        key = "test/backbone"
+        region = "ap-south-1"
+        encrypt = "true"
+    }
+}
