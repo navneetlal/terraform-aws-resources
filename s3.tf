@@ -7,41 +7,39 @@ resource "aws_s3_bucket" "main" {
   region = "${var.s3_region}"
 
   lifecycle {
-      prevent_destroy = "true"
+    prevent_destroy = "true"
   }
 
   server_side_encryption_configuration {
-      rule {
-          apply_server_side_encryption_by_default {
-              sse_algorithm = "AES256"
-          }
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
       }
+    }
   }
 
   versioning {
-      enabled = "true"
+    enabled = "true"
   }
 
   lifecycle_rule {
-      id = "state"
-      prefix= "state/"
-      enabled= true
+    id      = "state"
+    prefix  = "state/"
+    enabled = true
 
-      noncurrent_version_expiration {
-          days = 90
-      }
+    noncurrent_version_expiration {
+      days = 90
+    }
   }
-
-
 }
 
 terraform {
-    required_version = ">= 0.11"
+  required_version = ">= 0.11"
 
-    backend "s3" {
-        bucket = "terraform-navneet-test-ap-south-1"
-        key = "test/backbone"
-        region = "ap-south-1"
-        encrypt = "true"
-    }
+  backend "s3" {
+    bucket  = "terraform-navneet-test-ap-south-1"
+    key     = "test/backbone"
+    region  = "ap-south-1"
+    encrypt = "true"
+  }
 }
